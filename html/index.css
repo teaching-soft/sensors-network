@@ -1,0 +1,72 @@
+ body {
+	 font-family: "PT Sans", Arial, Helvetica, sans-serif;
+ }
+ h1 {
+	 text-align: center;
+ }
+.contenitore {
+  background-image: url('sfondoscuola.png'); /* Sostituisci 'sfondo.jpg' con il percorso dell'immagine che desideri utilizzare come sfondo */
+  background-size: cover; /* Per adattare l'immagine allo spazio del div */
+  background-position: center; /* Posiziona l'immagine al centro del div */
+  height: 300px; /* Altezza del div, puoi regolarla a tuo piacimento */
+  width: 100%; /* Larghezza del div, puoi regolarla a tuo piacimento */
+  display: flex; /* Opzionale: se vuoi centrare l'immagine nel div */
+  align-items: center; /* Opzionale: se vuoi centrare l'immagine nel div */
+  justify-content: center; /* Opzionale: se vuoi centrare l'immagine nel div */
+}
+
+.contenitore img {
+  max-width: 100%; /* Assicura che l'immagine non superi la larghezza del suo contenitore */
+  height: auto; /* Impedisce che l'immagine venga distorta mantenendo l'aspetto originale */
+}
+
+table.redTable {
+  border: 2px solid #A40808;
+  background-color: #EEE7DB;
+  width: 100%;
+  text-align: center;
+  border-collapse: collapse;
+}
+table.redTable td, table.redTable th {
+  border: 1px solid #AAAAAA;
+  padding: 3px 2px;
+}
+table.redTable tbody td {
+  font-size: 13px;
+}
+table.redTable tr:nth-child(even) {
+  background: #F5C8BF;
+}
+table.redTable thead {
+  background: #A40808;
+}
+table.redTable thead th {
+  font-size: 19px;
+  font-weight: bold;
+  color: #FFFFFF;
+  text-align: center;
+  border-left: 2px solid #A40808;
+}
+table.redTable thead th:first-child {
+  border-left: none;
+}
+
+table.redTable tfoot {
+  font-size: 13px;
+  font-weight: bold;
+  color: #FFFFFF;
+  background: #A40808;
+}
+table.redTable tfoot td {
+  font-size: 13px;
+}
+table.redTable tfoot .links {
+  text-align: right;
+}
+table.redTable tfoot .links a{
+  display: inline-block;
+  background: #FFFFFF;
+  color: #A40808;
+  padding: 2px 8px;
+  border-radius: 5px;
+}

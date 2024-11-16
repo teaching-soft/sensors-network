@@ -1,0 +1,15 @@
+# Va messo in
+# /etc/systemd/system/insertion-data-into-db.service
+# ricaricare le info sui servizi sudo systemctl daemon-reload
+# deve essere abilitato con sudo systemctl enable insertion-data-into-db.service
+
+[Unit]
+Description=Avvia lo script che inserisce i dati che arrivano dalla porta seriale nel db
+After=mysql.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/php /usr/local/bin/lettura_seriale_inserzione_dati_locale.php
+
+[Install]
+WantedBy=default.target
