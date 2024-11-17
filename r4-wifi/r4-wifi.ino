@@ -7,11 +7,8 @@
 #include <string.h>
 
 // Credenziali per la rete wifi
-char ssid[] = "xxxxxxxxxx";        // your network SSID (name)
-char pass[] = "xxxxxxxxxx";    // your network password (use for WPA, or use as key for WEP)
+#include "secret.h"
 
-IPAddress ipRaspberry(74,125,232,128);
-uint16_t port = 80;
 // wifiClient
 WiFiClient tcpClient;
 int status = WL_IDLE_STATUS;
@@ -71,19 +68,22 @@ void setup() {
 void sendSensorData(){
   // Recupera i dati
   // *******************
-  char sensorsData[100];
+  char sensorsData[] = "[110]";
   char response [100];
   uint8_t indexResponse = 0;
-  Serial.println("\nInvio dati al server...");
+  Serial.print("Invio dati al server:");
+  Serial.println(sensorsData);
   // Si connette
   if (tcpClient.connect(ipRaspberry, port)) {
 
     tcpClient.println(sensorsData);
+    delay(100);
     while (tcpClient.available()) {
       response[indexResponse] = tcpClient.read();
       indexResponse++;
       response[indexResponse] = '\0';
-      Serial.println(response);
+      //Serial.print("RISPOSTA:");
+      //Serial.println(response);
       if(strcasecmp(response,"OK") == 0){
         Serial.println("INVIO RIUSCITO");
         break;
@@ -94,7 +94,7 @@ void sendSensorData(){
       break;
     }
   }
-  Serial.println("\nInvio dati al server...");
+  Serial.println("Chiudo connessione");
   tcpClient.stop();
   }
 }
