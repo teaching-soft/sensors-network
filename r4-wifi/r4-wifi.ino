@@ -9,6 +9,11 @@
 // Credenziali per la rete wifi
 #include "secret.h"
 
+// Costanti da modificare
+#define PIN_ADC A0
+#define GRUPPO_ID 1
+
+
 // wifiClient
 WiFiClient tcpClient;
 int status = WL_IDLE_STATUS;
@@ -65,18 +70,15 @@ void setup() {
  
 }
 
-void sendSensorData(){
-  // Recupera i dati
-  // *******************
-  char sensorsData[] = "[110]";
+void sendSensorData(char *dataToSend){
   char response [100];
   uint8_t indexResponse = 0;
   Serial.print("Invio dati al server:");
-  Serial.println(sensorsData);
+  Serial.println(dataToSend);
   // Si connette
   if (tcpClient.connect(ipRaspberry, port)) {
 
-    tcpClient.println(sensorsData);
+    tcpClient.println(dataToSend);
     delay(100);
     while (tcpClient.available()) {
       response[indexResponse] = tcpClient.read();
@@ -105,7 +107,13 @@ void sendSensorData(){
 void loop() {
   
   while (true){
-    sendSensorData();
+     // Recupero temperatura
+    float lettura_adc = analogRead(PIN_ADC);
+    float milli_volt = (lettura_adc * 5000) / 1024.0;
+    float temperatura = milli_volt / 10.0;
+    char dataToSend[50];
+    sprintf(dataToSend,"[G%d:%.1f]",GRUPPO_ID,temperatura);
+    sendSensorData(dataToSend);
     delay(1000);
   }
 }

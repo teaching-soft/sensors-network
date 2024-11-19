@@ -14,7 +14,7 @@
 <TABLE class="redTable">
 <CAPTION>ULTIMI 10 VALORI</CAPTION>
 <TR>
-<TH>ID DATO</TH><TH>DATE</TH><TH>TIME</TH><TH>TEMP °C</TH>
+<TH>ID DATO</TH><TH>DATE</TH><TH>TIME</TH><TH>TEMP °C</TH><TH>LOCAZIONE</TH>
 </TR>
 <?php
    try {
@@ -31,7 +31,8 @@
 	// Estrae i risultati   
         while($row = $result->fetch()) //{
 			echo "<TR><TD>" . $row['id'] . "</TD><TD>" . $row['date'] . "</TD><TD>" . 
-				$row['time'] . "</TD><TD>" . $row['temperature'] . "</TD></TR>";
+				$row['time'] . "</TD><TD>" . $row['temperature']  . "</TD><TD>" . $row['locazione'] . "</TD></TR>";
+
         
        
 	}
