@@ -1,16 +1,25 @@
 /* giancarlomartini@gmail.com
- *
- *
+ * Arduino R4 + Rpi
+ * Rete di sensori
  * */
 
 #include "WiFiS3.h"
-#include <string.h>
-
 // Credenziali per la rete wifi
 #include "secret.h"
 
-// Costanti da modificare
-#define PIN_ADC A0
+#include <string.h>
+#include <OneWire.h>
+#include <DallasTemperature.h>
+
+// Costanti eventualmente da modificare
+#define SENSOR_BUS_PIN 2
+
+OneWire oneWire(SENSOR_BUS_PIN); //Creiamo istanza OneWire per utilizzare il canale di comunicazione
+DallasTemperature sensors(&oneWire); //Passiamo il canale di comunicazione alla libreria della Dallas
+
+/* per lm35
+#define PIN_ADC A0 */
+
 #define GRUPPO_ID 1
 
 
@@ -67,7 +76,9 @@ void setup() {
   }
   
   printWifiStatus();
- 
+
+  // Inizializza la comunicazione con il sensore
+  sensors.begin(); //Inizializzo comunicazione
 }
 
 void sendSensorData(char *dataToSend){
@@ -107,10 +118,17 @@ void sendSensorData(char *dataToSend){
 void loop() {
   
   while (true){
-     // Recupero temperatura
+
+    // Recupero temperatura
+    //L'esecuzione si blocca sul comando per il tempo richiesto (dipende dalla risoluzione impostata)
+     sensors.requestTemperatures(); //Invio comando per leggere temperatura
+    //Stampo temperatura del (primo) sensore del bus
+    float temperatura = sensors.getTempCByIndex(0);
+     /* per lm35
     float lettura_adc = analogRead(PIN_ADC);
     float milli_volt = (lettura_adc * 5000) / 1024.0;
     float temperatura = milli_volt / 10.0;
+    */
     char dataToSend[50];
     sprintf(dataToSend,"[G%d:%.1f]",GRUPPO_ID,temperatura);
     sendSensorData(dataToSend);
